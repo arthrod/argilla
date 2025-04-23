@@ -11,7 +11,6 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-import random
 import uuid
 from typing import Any, Dict, List, Optional, Union, Sequence
 
@@ -66,6 +65,7 @@ from tests.factories import (
     VectorFactory,
     VectorSettingsFactory,
 )
+import secrets
 
 
 @pytest_asyncio.fixture(scope="function")
@@ -248,7 +248,7 @@ async def test_banking_sentiment_dataset_with_vectors(
                 await VectorFactory.create(
                     vector_settings=settings,
                     record=record,
-                    value=[random.uniform(-10, 10) for _ in range(0, settings.dimensions)],
+                    value=[secrets.SystemRandom().uniform(-10, 10) for _ in range(0, settings.dimensions)],
                 )
             )
         await record.awaitable_attrs.vectors
@@ -477,7 +477,7 @@ class TestBaseElasticAndOpenSearchEngine:
 
     @pytest.mark.parametrize(
         argnames=("text_ann_size", "rating_ann_size"),
-        argvalues=[(random.randint(1, 9), random.randint(1, 9)) for _ in range(1, 5)],
+        argvalues=[(secrets.SystemRandom().randint(1, 9), secrets.SystemRandom().randint(1, 9)) for _ in range(1, 5)],
     )
     async def test_create_index_for_dataset_with_questions(
         self,

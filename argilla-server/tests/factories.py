@@ -13,7 +13,6 @@
 #  limitations under the License.
 
 import inspect
-import random
 
 import factory
 from argilla_server.enums import DatasetDistributionStrategy, FieldType, MetadataPropertyType, OptionsOrder
@@ -39,6 +38,7 @@ from factory.builder import BuildStep, StepBuilder, parse_declarations
 from sqlalchemy.ext.asyncio import async_object_session
 
 from tests.database import SyncTestSession, TestSession
+import secrets
 
 
 # https://github.com/FactoryBoy/factory_boy/issues/679#issuecomment-1348746070
@@ -233,7 +233,7 @@ class VectorSettingsFactory(BaseFactory):
 
     name = factory.Sequence(lambda n: f"vector-{n}")
     title = "Vector Title"
-    dimensions = factory.LazyAttribute(lambda _: random.randrange(16, 1024))
+    dimensions = factory.LazyAttribute(lambda _: secrets.SystemRandom().randrange(16, 1024))
     dataset = factory.SubFactory(DatasetFactory)
 
 

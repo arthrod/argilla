@@ -12,13 +12,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import random
 from time import sleep
 
 from argilla_v1.client.api import load
 from argilla_v1.monitoring.model_monitor import monitor
 
 from tests.integration.utils import delete_ignoring_errors
+import secrets
 
 
 def test_spacy_ner_monitor(monkeypatch, mocked_client):
@@ -35,7 +35,7 @@ def test_spacy_ner_monitor(monkeypatch, mocked_client):
         log_interval=0.5,
     )
 
-    random.seed(42)
+    secrets.SystemRandom().seed(42)
 
     for _ in range(0, 20):
         nlp("Paris is my favourite city")

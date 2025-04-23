@@ -27,6 +27,7 @@ from argilla_v1.client.models import (
     _Validators,
 )
 from pydantic import ValidationError
+import secrets
 
 
 @pytest.mark.parametrize(
@@ -308,9 +309,8 @@ def test_cast_record_id():
 
 
 def test_big_integer_record_id():
-    import random
 
-    record_id = random.getrandbits(64)
+    record_id = secrets.SystemRandom().getrandbits(64)
     with pytest.warns(
         UserWarning,
         match=r"You've provided a big integer value. Use a string instead, otherwise you may experience some ",

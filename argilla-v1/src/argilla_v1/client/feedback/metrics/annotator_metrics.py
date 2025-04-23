@@ -13,8 +13,6 @@
 #  limitations under the License.
 
 """This module contains metrics for Suggestions Metric and Responses Metric."""
-
-import random
 import warnings
 from collections import defaultdict
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union
@@ -40,6 +38,7 @@ from argilla_v1.client.feedback.schemas import (
 from argilla_v1.client.feedback.schemas.enums import ResponseStatusFilter
 from argilla_v1.client.feedback.schemas.records import SortBy
 from argilla_v1.utils.dependency import requires_dependencies
+import secrets
 
 if TYPE_CHECKING:
     from argilla_v1.client.feedback.dataset import FeedbackDataset
@@ -309,7 +308,7 @@ class PrecisionMetric(AnnotatorMetricBase):
         if is_multiclass(responses) or is_multiclass(suggestions):
             kwargs = {"average": "macro"}
         else:
-            kwargs = {"average": "binary", "pos_label": random.choice(np.unique(responses))}
+            kwargs = {"average": "binary", "pos_label": secrets.choice(np.unique(responses))}
         return precision_score(y_true=responses, y_pred=suggestions, **kwargs)
 
 
@@ -330,7 +329,7 @@ class RecallMetric(AnnotatorMetricBase):
         if is_multiclass(responses) or is_multiclass(suggestions):
             kwargs = {"average": "macro"}
         else:
-            kwargs = {"average": "binary", "pos_label": random.choice(np.unique(responses))}
+            kwargs = {"average": "binary", "pos_label": secrets.choice(np.unique(responses))}
         return recall_score(y_true=responses, y_pred=suggestions, **kwargs)
 
 
@@ -351,7 +350,7 @@ class F1ScoreMetric(AnnotatorMetricBase):
         if is_multiclass(responses) or is_multiclass(suggestions):
             kwargs = {"average": "macro"}
         else:
-            kwargs = {"average": "binary", "pos_label": random.choice(np.unique(responses))}
+            kwargs = {"average": "binary", "pos_label": secrets.choice(np.unique(responses))}
 
         return f1_score(responses, suggestions, **kwargs)
 

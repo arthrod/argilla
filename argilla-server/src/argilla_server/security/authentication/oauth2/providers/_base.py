@@ -14,7 +14,6 @@
 
 import json
 import os
-import random
 import re
 import string
 from typing import Dict, Any, ClassVar, Type, Optional, Union, List, Tuple
@@ -32,6 +31,7 @@ from starlette.responses import RedirectResponse
 from argilla_server.errors import future
 from argilla_server.security.authentication.claims import Claims
 from argilla_server.security.settings import settings
+import secrets
 
 
 class Strategy(BaseStrategy):
@@ -87,7 +87,7 @@ class OAuth2ClientProvider:
 
     def authorization_url(self, request: Request) -> Tuple[str, Optional[str]]:
         redirect_uri = self.get_redirect_uri(request)
-        state = "".join([random.choice(string.ascii_letters) for _ in range(32)])
+        state = "".join([secrets.choice(string.ascii_letters) for _ in range(32)])
 
         oauth2_query_params = dict(state=state, scope=self.scope, redirect_uri=redirect_uri)
         oauth2_query_params.update(request.query_params)

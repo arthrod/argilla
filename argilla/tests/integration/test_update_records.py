@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 import uuid
 from string import ascii_lowercase
 
@@ -21,12 +20,13 @@ import pytest
 import argilla as rg
 from argilla import Record
 from argilla._models import RecordModel
+import secrets
 
 
 @pytest.fixture
 def dataset(client: rg.Argilla) -> rg.Dataset:
     workspace = client.workspaces[0]
-    mock_dataset_name = "".join(random.choices(ascii_lowercase, k=16))
+    mock_dataset_name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = rg.Settings(
         allow_extra_metadata=True,
         fields=[

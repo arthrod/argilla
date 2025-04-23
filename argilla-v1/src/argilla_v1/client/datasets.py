@@ -12,7 +12,6 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-import random
 import uuid
 import warnings
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type, Union
@@ -32,6 +31,7 @@ from argilla_v1.client.models import (
 from argilla_v1.client.sdk.datasets.models import TaskType
 from argilla_v1.utils.dependency import require_dependencies, requires_dependencies
 from argilla_v1.utils.span_utils import SpanUtils
+import secrets
 
 if TYPE_CHECKING:
     import datasets
@@ -442,8 +442,8 @@ class DatasetBase:
 
         # shuffle records
         shuffled_records = self._records.copy()
-        seed = seed or random.randint(42, 1984)
-        random.Random(seed).shuffle(shuffled_records)
+        seed = seed or secrets.SystemRandom().randint(42, 1984)
+        secrets.SystemRandom().Random(seed).shuffle(shuffled_records)
 
         # turn the string into a Framework instance and trigger error if str is not valid
         if isinstance(framework, str):

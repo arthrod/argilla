@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 import uuid
 from datetime import datetime
 
 import pytest
 
 import argilla as rg
+import secrets
 
 
 @pytest.fixture
@@ -53,19 +53,19 @@ def test_vectors(client: rg.Argilla, dataset: rg.Dataset):
             "text": "Hello World, how are you?",
             "label": "positive",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
         {
             "text": "Hello World, how are you?",
             "label": "negative",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
         {
             "text": "Hello World, how are you?",
             "label": "positive",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
     ]
     dataset.records.log(records=mock_data)
@@ -85,19 +85,19 @@ def test_vectors_return_with_bool(client: rg.Argilla, dataset: rg.Dataset):
             "text": "Hello World, how are you?",
             "label": "positive",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
         {
             "text": "Hello World, how are you?",
             "label": "negative",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
         {
             "text": "Hello World, how are you?",
             "label": "positive",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
     ]
     dataset.records.log(records=mock_data)
@@ -117,19 +117,19 @@ def test_vectors_return_with_name(client: rg.Argilla, dataset: rg.Dataset):
             "text": "Hello World, how are you?",
             "label": "positive",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
         {
             "text": "Hello World, how are you?",
             "label": "negative",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
         {
             "text": "Hello World, how are you?",
             "label": "positive",
             "id": uuid.uuid4(),
-            "vector": [random.random() for _ in range(10)],
+            "vector": [secrets.SystemRandom().random() for _ in range(10)],
         },
     ]
     dataset.records.log(records=mock_data)
