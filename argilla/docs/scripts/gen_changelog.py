@@ -16,7 +16,7 @@ import base64
 import os
 
 import mkdocs_gen_files
-import requests
+from security import safe_requests
 
 REPOSITORY = "argilla-io/argilla"
 CHANGELOG_PATH = "argilla/CHANGELOG.md"
@@ -36,7 +36,7 @@ def fetch_file_from_github(repository, changelog_path, branch, auth_token):
     changelog_url = f"https://api.github.com/repos/{owner}/{repo_name}/contents/{changelog_path}?ref={branch}"
 
     print(f"Fetching CHANGELOG.md from {changelog_url}...")
-    response = requests.get(changelog_url, headers=headers)
+    response = safe_requests.get(changelog_url, headers=headers)
 
     content = base64.b64decode(response.json()["content"]).decode("utf-8")
 
