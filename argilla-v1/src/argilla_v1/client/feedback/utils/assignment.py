@@ -13,7 +13,6 @@
 #  limitations under the License.
 
 
-import random
 import warnings
 from collections import defaultdict
 from typing import Any, Dict, List, Union
@@ -22,6 +21,7 @@ from rich.progress import Progress
 
 from argilla_v1.client.users import User
 from argilla_v1.client.workspaces import Workspace
+import secrets
 
 
 def check_user(user_to_check: Union[str, User]) -> User:
@@ -94,7 +94,7 @@ def assign_records_to_groups(
         )
 
     if shuffle:
-        random.shuffle(records)
+        secrets.SystemRandom().shuffle(records)
 
     assignments = {}
     assignments_grouped = {}
@@ -152,7 +152,7 @@ def assign_records_to_individuals(
         )
 
     if shuffle:
-        random.shuffle(records)
+        secrets.SystemRandom().shuffle(records)
 
     users = [check_user(user) for user in users]
     assignments = {user.username: [] for user in users}

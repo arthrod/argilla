@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 from string import ascii_lowercase
 
 import pytest
 
 import argilla as rg
 from argilla import Argilla, Dataset, Settings, TextField, Workspace, LabelQuestion
+import secrets
 
 
 @pytest.fixture
 def dataset_with_metadata(client: Argilla, workspace: Workspace) -> Dataset:
-    name = "".join(random.choices(ascii_lowercase, k=16))
+    name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = Settings(
         fields=[TextField(name="text")],
         questions=[LabelQuestion(name="label", labels=["positive", "negative"])],
@@ -43,7 +43,7 @@ def dataset_with_metadata(client: Argilla, workspace: Workspace) -> Dataset:
 
 
 def test_create_dataset_with_metadata(client: Argilla, workspace: Workspace) -> Dataset:
-    name = "".join(random.choices(ascii_lowercase, k=16))
+    name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = Settings(
         fields=[TextField(name="text")],
         questions=[LabelQuestion(name="label", labels=["positive", "negative"])],
@@ -73,7 +73,7 @@ def test_create_dataset_with_metadata(client: Argilla, workspace: Workspace) -> 
     ],
 )
 def test_create_dataset_with_numerical_metadata(client: Argilla, workspace: Workspace, min, max, type) -> Dataset:
-    name = "".join(random.choices(ascii_lowercase, k=16))
+    name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = Settings(
         fields=[TextField(name="text")],
         questions=[LabelQuestion(name="label", labels=["positive", "negative"])],

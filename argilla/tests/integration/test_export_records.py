@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import json
-import random
 import uuid
 from pathlib import Path
 from string import ascii_lowercase
@@ -24,11 +23,12 @@ from datasets import Dataset as HFDataset
 
 import argilla as rg
 from argilla import Argilla
+import secrets
 
 
 @pytest.fixture
 def dataset(client) -> rg.Dataset:
-    mock_dataset_name = "".join(random.choices(ascii_lowercase, k=16))
+    mock_dataset_name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = rg.Settings(
         fields=[
             rg.TextField(name="text"),

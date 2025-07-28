@@ -12,7 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import random
 from abc import abstractmethod
 from collections import Counter
 from enum import Enum
@@ -29,6 +28,7 @@ from argilla_v1.client.feedback.schemas import (
     ValueSchema,
 )
 from argilla_v1.pydantic_v1 import BaseModel, root_validator, validator
+import secrets
 
 
 class UnifiedValueSchema(ValueSchema):
@@ -162,7 +162,7 @@ class RatingQuestionStrategy(RatingQuestionStrategyMixin, Enum):
             # Get a list of values with the maximum count
             most_common_values = [value for value, count in counter.items() if count == max_count]
             if len(most_common_values) > 1:
-                majority_value = random.choice(most_common_values)
+                majority_value = secrets.choice(most_common_values)
             else:
                 majority_value = counter.most_common(1)[0][0]
             rec._unified_responses[question] = [UnifiedValueSchema(value=majority_value, strategy=self.value)]
@@ -364,7 +364,7 @@ class RankingQuestionStrategy(RatingQuestionStrategyMixin, Enum):
             # Get a list of values with the maximum count
             most_common_values = [value for value, count in counter.items() if count == max_count]
             if len(most_common_values) > 1:
-                majority_value = random.choice(most_common_values)
+                majority_value = secrets.choice(most_common_values)
             else:
                 majority_value = counter.most_common()[0][0]
 
@@ -500,7 +500,7 @@ class LabelQuestionStrategy(LabelQuestionStrategyMixin, Enum):
             # Get a list of values with the maximum count
             most_common_values = [value for value, count in counter.items() if count == max_count]
             if len(most_common_values) > 1:
-                majority_value = random.choice(most_common_values)
+                majority_value = secrets.choice(most_common_values)
             else:
                 majority_value = counter.most_common(1)[0][0]
 
@@ -560,7 +560,7 @@ class MultiLabelQuestionStrategy(LabelQuestionStrategyMixin, Enum):
                     majority_value.append(value)
 
             if not majority_value:
-                majority_value = [random.choice(list(counter.keys()))]
+                majority_value = [secrets.choice(list(counter.keys()))]
 
             rec._unified_responses[question] = [UnifiedValueSchema(value=list(majority_value), strategy=self.value)]
         return records

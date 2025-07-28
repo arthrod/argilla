@@ -14,12 +14,12 @@
 
 import logging
 import os
-import random
 import re
 import string
 from typing import Any, Dict, Union
 
 from slack_sdk import WebClient
+import secrets
 
 SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
 GITHUB_REF = os.environ["GITHUB_REF"]
@@ -41,7 +41,7 @@ def get_pull_request_number() -> Union[int, None]:
 
 def generate_random_string(length: int, include_uppercase: bool = True) -> str:
     characters = string.ascii_letters
-    random_string = "".join(random.choice(characters) for _ in range(length))
+    random_string = "".join(secrets.choice(characters) for _ in range(length))
     return random_string
 
 

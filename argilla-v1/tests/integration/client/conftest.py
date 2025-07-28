@@ -13,7 +13,6 @@
 #  limitations under the License.
 
 import datetime
-import random
 from typing import TYPE_CHECKING, Generator, List
 
 import pytest
@@ -61,6 +60,7 @@ from argilla_v1.client.singleton import init
 from datasets import Dataset
 
 from tests.integration.utils import delete_ignoring_errors
+import secrets
 
 if TYPE_CHECKING:
     from argilla_v1.client.feedback.schemas.types import (
@@ -69,7 +69,7 @@ if TYPE_CHECKING:
         AllowedQuestionTypes,
     )
 
-random.seed(42)
+secrets.SystemRandom().seed(42)
 
 
 @pytest.fixture
@@ -577,11 +577,6 @@ def feedback_dataset_records() -> List[FeedbackRecord]:
 
 @pytest.fixture
 def feedback_dataset_records_with_paired_suggestions() -> List[FeedbackRecord]:
-    # This fixture contains the same records as `feedback_dataset_records` but with suggestions
-    # for each question so that we can test the annotator metrics.
-    # Generates 4 records from 3 annotators.
-
-    import random
     import uuid
 
     q1_options = ["positive", "negative"]
@@ -600,16 +595,16 @@ def feedback_dataset_records_with_paired_suggestions() -> List[FeedbackRecord]:
         responses = []
         for annotator_id in range(1, 4):
             # Make the random seed depend on the record_id and annotator_id for reproducibility.
-            random.seed(123 + record_id + annotator_id)
-            idx1 = random.randint(0, len(q1_options) - 1)
-            random.seed(123 + record_id + annotator_id + 1)
-            idx2 = random.randint(0, len(q2_options) - 1)
-            random.seed(123 + record_id + annotator_id + 2)
-            idx3 = random.randint(0, len(q3_options) - 1)
-            random.seed(123 + record_id + annotator_id + 3)
-            idx4 = random.randint(0, len(q4_options) - 1)
-            random.seed(123 + record_id + annotator_id + 4)
-            idx5 = random.randint(0, len(q5_options) - 1)
+            secrets.SystemRandom().seed(123 + record_id + annotator_id)
+            idx1 = secrets.SystemRandom().randint(0, len(q1_options) - 1)
+            secrets.SystemRandom().seed(123 + record_id + annotator_id + 1)
+            idx2 = secrets.SystemRandom().randint(0, len(q2_options) - 1)
+            secrets.SystemRandom().seed(123 + record_id + annotator_id + 2)
+            idx3 = secrets.SystemRandom().randint(0, len(q3_options) - 1)
+            secrets.SystemRandom().seed(123 + record_id + annotator_id + 3)
+            idx4 = secrets.SystemRandom().randint(0, len(q4_options) - 1)
+            secrets.SystemRandom().seed(123 + record_id + annotator_id + 4)
+            idx5 = secrets.SystemRandom().randint(0, len(q5_options) - 1)
 
             response_q1 = q1_options[idx1]
             response_q2 = q2_options[idx2]

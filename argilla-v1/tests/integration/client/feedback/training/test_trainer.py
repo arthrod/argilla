@@ -12,11 +12,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import random
 from collections import Counter
 from typing import TYPE_CHECKING, Callable, List, Union
 
 import pytest
+import secrets
 
 if TYPE_CHECKING:
     from argilla_v1.client.feedback.schemas.types import AllowedFieldTypes, AllowedQuestionTypes
@@ -196,7 +196,7 @@ def test_prepare_for_training_text_classification_with_formatting_func(
             most_common = counter.most_common()
             max_frequency = most_common[0][1]
             most_common_elements = [element for element, frequency in most_common if frequency == max_frequency]
-            label = random.choice(most_common_elements)
+            label = secrets.choice(most_common_elements)
             return {"text": text, "label": label}
         else:
             return None

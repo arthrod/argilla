@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 from string import ascii_lowercase
 
 import pytest
 
 from argilla import Argilla, Dataset, Settings, Workspace, TextQuestion, TextField
 from argilla._exceptions import SettingsError
+import secrets
 
 
 def test_dataset_empty_settings(client: Argilla, workspace: Workspace):
-    name = "".join(random.choices(ascii_lowercase, k=16))
+    name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = Settings()
     dataset = Dataset(
         name=name,
@@ -35,7 +35,7 @@ def test_dataset_empty_settings(client: Argilla, workspace: Workspace):
 
 
 def test_dataset_no_fields(client: Argilla, workspace: Workspace) -> None:
-    name = "".join(random.choices(ascii_lowercase, k=16))
+    name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = Settings(
         questions=[
             TextQuestion(name="text_question"),
@@ -52,7 +52,7 @@ def test_dataset_no_fields(client: Argilla, workspace: Workspace) -> None:
 
 
 def test_dataset_no_questions(client: Argilla, workspace: Workspace) -> Dataset:
-    name = "".join(random.choices(ascii_lowercase, k=16))
+    name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = Settings(
         fields=[
             TextField(name="text_field"),

@@ -14,7 +14,6 @@
 
 import json
 import os
-import random
 import uuid
 from string import ascii_lowercase
 from tempfile import TemporaryDirectory
@@ -24,13 +23,14 @@ import argilla as rg
 import pytest
 from argilla._exceptions import ConflictError, SettingsError
 from huggingface_hub.utils._errors import BadRequestError, FileMetadataError, HfHubHTTPError
+import secrets
 
 _RETRIES = 5
 
 
 @pytest.fixture
 def dataset(client) -> rg.Dataset:
-    mock_dataset_name = "".join(random.choices(ascii_lowercase, k=16))
+    mock_dataset_name = "".join(secrets.SystemRandom().choices(ascii_lowercase, k=16))
     settings = rg.Settings(
         fields=[
             rg.TextField(name="text"),

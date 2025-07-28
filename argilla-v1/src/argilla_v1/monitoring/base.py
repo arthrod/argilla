@@ -14,7 +14,6 @@
 
 import atexit
 import logging
-import random
 import threading
 from queue import Empty, Queue
 from typing import Any, Dict, Iterable, List, Optional
@@ -26,6 +25,7 @@ import wrapt
 from argilla_v1.client.api import Api
 from argilla_v1.client.models import Record
 from argilla_v1.client.sdk.commons.errors import ArApiResponseError
+import secrets
 
 
 class ModelNotSupportedError(Exception):
@@ -206,7 +206,7 @@ class BaseMonitor(wrapt.ObjectProxy):
 
     def is_record_accepted(self) -> bool:
         """Return True if a record should be logged to argilla"""
-        return random.uniform(0.0, 1.0) <= self.sample_rate
+        return secrets.SystemRandom().uniform(0.0, 1.0) <= self.sample_rate
 
     def _prepare_log_data(self, *args, **kwargs) -> Dict[str, Any]:
         raise NotImplementedError()
