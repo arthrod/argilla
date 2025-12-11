@@ -40,7 +40,7 @@
     "nuxt-highlightjs": "^1.0.2",
     "pinia": "^2.1.4",
     "sass": "^1.49.9",
-    "ts-injecty": "^0.0.22",
+    "ts-injecty": "^0.0.23",
     "v-click-outside": "^3.1.2",
     "vue": "^2.7.14",
     "vue-demi": "^0.14.5",
